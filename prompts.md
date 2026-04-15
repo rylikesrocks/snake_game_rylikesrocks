@@ -30,3 +30,7 @@ I would like to make the snake more appealing. Give the snake beady black eyes w
 Prompt 8:
 
 Time to make the game more interesting. After the score reaches 10, add an object to the screen that is able to be collided with and ends the game once that happens. After every 10 score, add another object to the screen. In addition to this, once an object is added, make text appear on the screen for 5 seconds that states "A Rock has fallen from the sky, Watch Out!". make the objects color a light grey.
+
+Prompt 9:
+
+Now, change the apple sprite to look like an actual apple instead of just a red square. Make sure that it has a black outline so it is easy to see for the player

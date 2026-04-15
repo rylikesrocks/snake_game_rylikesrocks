@@ -148,7 +148,7 @@ public class SnakeGame {
         }
 
         private void startTimer() {
-            gameTimer = new Timer(50, e -> updateSnake());
+            gameTimer = new Timer(75, e -> updateSnake());
             gameTimer.start();
         }
 
@@ -276,10 +276,36 @@ public class SnakeGame {
                 g.fillRect(rock.x * cellSize, rock.y * cellSize, cellSize, cellSize);
             }
             
-            // Draw food in red
+            // Draw food as an apple with outline and stem
             if (food != null) {
+                int appleX = food.x * cellSize;
+                int appleY = food.y * cellSize;
+                int appleDiameter = 18;
+                int appleRadius = appleDiameter / 2;
+                int centerX = appleX + cellSize / 2;
+                int centerY = appleY + cellSize / 2;
+                
+                // Draw red apple body
                 g.setColor(Color.RED);
-                g.fillRect(food.x * cellSize, food.y * cellSize, cellSize, cellSize);
+                g.fillOval(centerX - appleRadius, centerY - appleRadius, appleDiameter, appleDiameter);
+                
+                // Draw black outline for visibility
+                g.setColor(Color.BLACK);
+                g2d.setStroke(new BasicStroke(2));
+                g2d.drawOval(centerX - appleRadius, centerY - appleRadius, appleDiameter, appleDiameter);
+                
+                // Draw brown stem at the top
+                g.setColor(new Color(139, 69, 19));  // Saddle brown
+                g2d.setStroke(new BasicStroke(2));
+                g2d.drawLine(centerX, centerY - appleRadius - 1, centerX, centerY - appleRadius - 6);
+                
+                // Draw green leaf
+                g.setColor(new Color(34, 139, 34));  // Forest green
+                int leafX = centerX + 4;
+                int leafY = centerY - appleRadius - 3;
+                int[] leafXPoints = {leafX, leafX + 5, leafX + 3};
+                int[] leafYPoints = {leafY, leafY - 2, leafY + 2};
+                g2d.fillPolygon(leafXPoints, leafYPoints, 3);
             }
 
             // Draw score in top-left
