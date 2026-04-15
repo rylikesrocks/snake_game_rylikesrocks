@@ -22,3 +22,7 @@ Could you change the game over borders and fill color borders to match the 700 b
 Prompt 6: 
 
 The gameOver triggers at 600 by 600 pixels. Can you Adjust this to match the JFrame size of 700 by 700 pixels. Add some additional comments so I can see where things are.
+
+Prompt 7:
+
+I would like to make the snake more appealing. Give the snake beady black eyes with white spots as it moves around the screen. Alternate the snake color between a random color for every length it gains. Change the starting snake body to be a dark green as well.

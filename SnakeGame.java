@@ -6,6 +6,10 @@ import java.util.Random;
 import javax.swing.*;
 import javax.swing.Timer;
 
+
+// cool snake game
+
+
 public class SnakeGame {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
