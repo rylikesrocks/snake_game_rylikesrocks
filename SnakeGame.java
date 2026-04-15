@@ -18,8 +18,9 @@ public class SnakeGame {
     }
 
     public class SnakeStarter extends JPanel {
-        private final int gridSize = 20;
-        private final int cellSize = 30;
+        // Grid configuration: 28 x 28 cells with 25 pixels per cell = 700 x 700 pixel game area
+        private final int gridSize = 28;
+        private final int cellSize = 25;
         private ArrayList<Point> snake;
         private Point direction = new Point(1, 0);  // Moving right
         private Point nextDirection = new Point(1, 0);
@@ -41,7 +42,7 @@ public class SnakeGame {
 
         private void initializeSnake() {
             snake = new ArrayList<>();
-            // Create a three-segment snake
+            // Create a three-segment snake starting near center (grid: 0 to 27)
             snake.add(new Point(10, 10)); // Head
             snake.add(new Point(9, 10));  // Body segment 1
             snake.add(new Point(8, 10));  // Body segment 2
@@ -109,32 +110,35 @@ public class SnakeGame {
         }
 
         private void updateSnake() {
+            // Skip update if game is already over
             if (gameOver) return;
 
+            // Update direction based on player input
             direction = nextDirection;
             Point head = snake.get(0);
             Point newHead = new Point(head.x + direction.x, head.y + direction.y);
 
-            // Check wall collision
+            // Check wall collision (boundaries: 0 to gridSize-1 for 700x700 play area)
             if (newHead.x < 0 || newHead.x >= gridSize || newHead.y < 0 || newHead.y >= gridSize) {
                 endGame();
                 return;
             }
 
-            // Check self collision
+            // Check self collision (segment hit itself)
             if (snake.contains(newHead)) {
                 endGame();
                 return;
             }
 
+            // Add new head to snake
             snake.add(0, newHead);
 
-            // Check food collision
+            // Check food collision and grow snake
             if (newHead.equals(food)) {
-                score++;
-                spawnFood();
+                score++;  // Increment score
+                spawnFood();  // Spawn new food pellet
             } else {
-                snake.remove(snake.size() - 1);
+                snake.remove(snake.size() - 1);  // Remove tail (no growth if no food)
             }
 
             repaint();
@@ -148,6 +152,7 @@ public class SnakeGame {
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
+            // Fill entire game area (700x700 pixels) with background color
             g.setColor(new Color(22, 28, 33));
             g.fillRect(0, 0, getWidth(), getHeight());
 

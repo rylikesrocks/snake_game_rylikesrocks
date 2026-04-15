@@ -18,3 +18,7 @@ Prompt 5:
 
 
 Could you change the game over borders and fill color borders to match the 700 by 700 pixels as declared in the main method.
+
+Prompt 6: 
+
+The gameOver triggers at 600 by 600 pixels. Can you Adjust this to match the JFrame size of 700 by 700 pixels. Add some additional comments so I can see where things are.
