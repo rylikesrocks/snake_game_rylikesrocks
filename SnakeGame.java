@@ -15,7 +15,7 @@ public class SnakeGame {
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame("Snake Starter");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(700, 700);
+            frame.setSize(730, 750);  // Accounts for window decorations to ensure 700x700 content area
             frame.setLocationRelativeTo(null);
             frame.add(new SnakeGame().new SnakeStarter());
             frame.setVisible(true);
@@ -280,7 +280,7 @@ public class SnakeGame {
             if (food != null) {
                 int appleX = food.x * cellSize;
                 int appleY = food.y * cellSize;
-                int appleDiameter = 18;
+                int appleDiameter = 16;  // Reduced to fit within 25px cell
                 int appleRadius = appleDiameter / 2;
                 int centerX = appleX + cellSize / 2;
                 int centerY = appleY + cellSize / 2;
@@ -297,13 +297,13 @@ public class SnakeGame {
                 // Draw brown stem at the top
                 g.setColor(new Color(139, 69, 19));  // Saddle brown
                 g2d.setStroke(new BasicStroke(2));
-                g2d.drawLine(centerX, centerY - appleRadius - 1, centerX, centerY - appleRadius - 6);
+                g2d.drawLine(centerX, centerY - appleRadius - 1, centerX, centerY - appleRadius - 4);  // Reduced stem length
                 
                 // Draw green leaf
                 g.setColor(new Color(34, 139, 34));  // Forest green
-                int leafX = centerX + 4;
-                int leafY = centerY - appleRadius - 3;
-                int[] leafXPoints = {leafX, leafX + 5, leafX + 3};
+                int leafX = centerX + 3;
+                int leafY = centerY - appleRadius - 2;
+                int[] leafXPoints = {leafX, leafX + 4, leafX + 2};
                 int[] leafYPoints = {leafY, leafY - 2, leafY + 2};
                 g2d.fillPolygon(leafXPoints, leafYPoints, 3);
             }
