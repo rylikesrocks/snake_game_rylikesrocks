@@ -26,3 +26,7 @@ The gameOver triggers at 600 by 600 pixels. Can you Adjust this to match the JFr
 Prompt 7:
 
 I would like to make the snake more appealing. Give the snake beady black eyes with white spots as it moves around the screen. Alternate the snake color between a random color for every length it gains. Change the starting snake body to be a dark green as well.
+
+Prompt 8:
+
+Time to make the game more interesting. After the score reaches 10, add an object to the screen that is able to be collided with and ends the game once that happens. After every 10 score, add another object to the screen. In addition to this, once an object is added, make text appear on the screen for 5 seconds that states "A Rock has fallen from the sky, Watch Out!". make the objects color a light grey.

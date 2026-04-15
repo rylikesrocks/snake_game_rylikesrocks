@@ -36,11 +36,15 @@ public class SnakeGame {
         private int score = 0;
         private boolean gameOver = false;
         private Random random = new Random();
+        private ArrayList<Point> rocks;  // Obstacles that end the game
+        private int lastRockSpawnScore = 0;  // Track last score milestone for rock spawning
+        private long warningMessageTime = 0;  // Track when warning message should disappear
 
         public SnakeStarter() {
             setBackground(Color.BLACK);
             setFocusable(true);
             requestFocusInWindow();
+            rocks = new ArrayList<>();
             initializeSnake();
             spawnFood();
             setupKeyListener();
@@ -72,6 +76,15 @@ public class SnakeGame {
                 100 + random.nextInt(156),  // 100-255
                 100 + random.nextInt(156)   // 100-255
             );
+        }
+        
+        private void spawnRock() {
+            // Spawn a rock at a random location not occupied by snake or food
+            Point newRock;
+            do {
+                newRock = new Point(random.nextInt(gridSize), random.nextInt(gridSize));
+            } while (snake.contains(newRock) || newRock.equals(food) || rocks.contains(newRock));
+            rocks.add(newRock);
         }
 
         private void spawnFood() {
@@ -124,15 +137,18 @@ public class SnakeGame {
             nextDirection = new Point(1, 0);
             score = 0;
             gameOver = false;
+            lastRockSpawnScore = 0;
+            warningMessageTime = 0;
             snake.clear();
             segmentColors.clear();
+            rocks.clear();
             initializeSnake();
             spawnFood();
             requestFocusInWindow();
         }
 
         private void startTimer() {
-            gameTimer = new Timer(150, e -> updateSnake());
+            gameTimer = new Timer(250, e -> updateSnake());
             gameTimer.start();
         }
 
@@ -168,11 +184,23 @@ public class SnakeGame {
                 segmentColors.put(newHead, currentGrowthColor);
                 // Generate new color for next growth
                 currentGrowthColor = generateRandomColor();
+                // Spawn new rocks every 10 score
+                if (score > lastRockSpawnScore && score % 10 == 0) {
+                    spawnRock();
+                    lastRockSpawnScore = score;
+                    warningMessageTime = System.currentTimeMillis();
+                }
                 spawnFood();  // Spawn new food pellet
             } else {
                 // Remove tail and its color entry
                 Point tail = snake.remove(snake.size() - 1);
                 segmentColors.remove(tail);
+            }
+            
+            // Check rock collision (ends game)
+            if (rocks.contains(newHead)) {
+                endGame();
+                return;
             }
 
             repaint();
@@ -242,6 +270,12 @@ public class SnakeGame {
                 g.fillOval(eye2X + 1, eye2Y + 1, 3, 3);
             }
 
+            // Draw rocks in light grey
+            g.setColor(new Color(192, 192, 192));  // Light grey
+            for (Point rock : rocks) {
+                g.fillRect(rock.x * cellSize, rock.y * cellSize, cellSize, cellSize);
+            }
+            
             // Draw food in red
             if (food != null) {
                 g.setColor(Color.RED);
@@ -252,6 +286,18 @@ public class SnakeGame {
             g.setColor(Color.WHITE);
             g.setFont(new Font("Arial", Font.BOLD, 16));
             g.drawString("Score: " + score, 10, 20);
+            
+            // Draw warning message for 5 seconds after rock spawns
+            long currentTime = System.currentTimeMillis();
+            if (warningMessageTime > 0 && currentTime - warningMessageTime < 5000) {
+                g.setColor(new Color(255, 100, 100));  // Red warning text
+                g.setFont(new Font("Arial", Font.BOLD, 20));
+                FontMetrics fm = g.getFontMetrics();
+                String warningText = "A Rock has fallen from the sky, Watch Out!";
+                int x = (getWidth() - fm.stringWidth(warningText)) / 2;
+                int y = 60;
+                g.drawString(warningText, x, y);
+            }
 
             // Draw game over message
             if (gameOver) {
