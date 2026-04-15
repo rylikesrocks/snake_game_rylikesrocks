@@ -34,3 +34,7 @@ Time to make the game more interesting. After the score reaches 10, add an objec
 Prompt 9:
 
 Now, change the apple sprite to look like an actual apple instead of just a red square. Make sure that it has a black outline so it is easy to see for the player
+
+Prompt 10:
+
+The apple seems to spawn outside the allotted 700 by 700 pixels. Fiz this so that it spawns within the parameters. All of the sides end the game at the correct size except the bottom. Fix this as well so that all sides of the frame are the same.

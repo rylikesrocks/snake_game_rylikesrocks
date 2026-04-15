@@ -148,7 +148,7 @@ public class SnakeGame {
         }
 
         private void startTimer() {
-            gameTimer = new Timer(75, e -> updateSnake());
+            gameTimer = new Timer(100, e -> updateSnake());
             gameTimer.start();
         }
 
